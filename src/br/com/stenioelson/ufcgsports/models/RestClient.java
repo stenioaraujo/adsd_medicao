@@ -1,6 +1,7 @@
 package br.com.stenioelson.ufcgsports.models;
 
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.InvocationCallback;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -31,5 +32,31 @@ public class RestClient {
                     callBack.result();
                 }
             });
+    }
+
+    public static void post(String hostWithProtocol, String path, CallBack callBack) {
+        WebTarget target = ClientBuilder.newClient().target(hostWithProtocol);
+
+        String input = "{\"nome\": \"sauna\", "
+                + "\"minPessoas\":\"2\"}";
+
+        target
+                .path(path)
+                .request()
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .async()
+                .post(Entity.json(input), new InvocationCallback<String>() {
+                    @Override
+                    public void completed(String resultado) {
+                        callBack.setResultado("{success: true}");
+                        callBack.result();
+                    }
+
+                    @Override
+                    public void failed(Throwable throwable) {
+                        callBack.setResultado("{success: false}");
+                        callBack.result();
+                    }
+                });
     }
 }
