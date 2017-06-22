@@ -1,7 +1,11 @@
 package br.com.stenioelson.ufcgsports.models;
 
+import javax.json.Json;
+import javax.json.JsonReader;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
+import java.io.StringReader;
 
 /**
  * Created by stenio on 6/21/2017.
@@ -35,7 +39,8 @@ public class Credential {
         if (token == null) {
             Response res = RestClient.postSync(host, AUTH_PATH, LOGIN_JSON_CREDENTIALS);
             String resToken = res.readEntity(String.class);
-            token = resToken.split("\"")[3];
+            JsonReader jsonReader = Json.createReader(new StringReader(resToken));
+            token = jsonReader.readObject().getString("token");
         }
 
         return token;
@@ -44,6 +49,7 @@ public class Credential {
     public static MultivaluedHashMap getHeaders() {
         MultivaluedHashMap<String, String> map = new MultivaluedHashMap<>();
 
+        map.putSingle("Content-Type", MediaType.APPLICATION_JSON);
         map.putSingle("Authorization", "Bearer " + getToken());
         map.putSingle("X-Application-Id", X_APPLICATION_ID);
         map.putSingle("X-API-Key", X_API_KEY);
