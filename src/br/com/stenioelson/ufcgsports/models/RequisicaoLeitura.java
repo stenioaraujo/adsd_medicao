@@ -6,6 +6,6 @@ package br.com.stenioelson.ufcgsports.models;
 public class RequisicaoLeitura extends Requisicao {
     @Override
     public void send(CallBack callBack) {
-        RestClient.get("http://arrumai.stenioelson.com.br:9000", "/login", callBack);
+        RestClient.get(Credential.getHost(), Credential.RECURSOS_PATH, callBack);
     }
 }

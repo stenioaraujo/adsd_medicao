@@ -6,6 +6,9 @@ package br.com.stenioelson.ufcgsports.models;
 public class RequisicaoEscrita extends Requisicao {
     @Override
     public void send(CallBack callBack) {
-        RestClient.post("http://localhost:9000", "/api/recursos/", callBack);
+        String input = "{\"nome\": \"sauna\", "
+                + "\"minPessoas\":\"2\"}";
+
+        RestClient.post(Credential.getHost(), Credential.RECURSOS_PATH, input, callBack);
     }
 }

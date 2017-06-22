@@ -1,6 +1,7 @@
 package br.com.stenioelson.ufcgsports.experimentos;
 
 import br.com.stenioelson.ufcgsports.models.CallBack;
+import br.com.stenioelson.ufcgsports.models.Credential;
 import br.com.stenioelson.ufcgsports.models.TesteFactory;
 
 /**
@@ -9,6 +10,8 @@ import br.com.stenioelson.ufcgsports.models.TesteFactory;
 public class Main {
 
     public static void main(String[] args) {
+        Credential.setHost(Credential.REMOTE_HOST);
+
         StringBuffer buffer = new StringBuffer();
         CallBack callBackFinal = new CallBack() {
             @Override
