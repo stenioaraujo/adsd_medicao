@@ -7,23 +7,35 @@ public class TesteFactory {
 
     private TesteFactory() {}
 
-    public static void criarTesteDuzentasRequisicoesLeitura(StringBuffer buffer, CallBack callBackFinal) {
+    public static Teste criarTesteDuzentasRequisicoesLeitura(StringBuffer buffer, CallBack callBackFinal) {
         Teste teste = new Teste(new RequisicaoLeitura(), 200);
-        teste.run(buffer, callBackFinal);
+        teste.setBuffer(buffer);
+        teste.setCallback(callBackFinal);
+
+        return teste;
     }
 
-    public static void criarTesteQuinhentasRequisicoesLeitura(StringBuffer buffer, CallBack callBackFinal) {
+    public static Teste criarTesteQuinhentasRequisicoesLeitura(StringBuffer buffer, CallBack callBackFinal) {
         Teste teste = new Teste(new RequisicaoLeitura(), 500);
-        teste.run(buffer, callBackFinal);
+        teste.setBuffer(buffer);
+        teste.setCallback(callBackFinal);
+
+        return teste;
     }
 
-    public static void criarTesteDuzentasRequisicoesEscrita(StringBuffer buffer, CallBack callBackFinal) {
+    public static Teste criarTesteDuzentasRequisicoesEscrita(StringBuffer buffer, CallBack callBackFinal) {
         Teste teste = new Teste(new RequisicaoEscrita(), 200);
-        teste.run(buffer, callBackFinal);
+        teste.setBuffer(buffer);
+        teste.setCallback(callBackFinal);
+
+        return teste;
     }
 
-    public static void criarTesteQuinhentasRequisicoesEscrita(StringBuffer buffer, CallBack callBackFinal) {
-        Teste teste = new Teste(new RequisicaoLeitura(), 500);
-        teste.run(buffer, callBackFinal);
+    public static Teste criarTesteQuinhentasRequisicoesEscrita(StringBuffer buffer, CallBack callBackFinal) {
+        Teste teste = new Teste(new RequisicaoEscrita(), 500);
+        teste.setBuffer(buffer);
+        teste.setCallback(callBackFinal);
+
+        return teste;
     }
 }

@@ -6,6 +6,8 @@ package br.com.stenioelson.ufcgsports.models;
 public class Teste {
     private Requisicao requisicao;
     private int numeroDeRequisicoes;
+    private StringBuffer buffer;
+    private CallBack callback;
 
     public Teste() {}
 
@@ -35,18 +37,34 @@ public class Teste {
         this.numeroDeRequisicoes = numeroDeRequisicoes;
     }
 
-    public void run(StringBuffer buffer, CallBack callback) {
-        Contador contador = new Contador(numeroDeRequisicoes, callback);
+    public void run() {
+        Contador contador = new Contador(numeroDeRequisicoes, getCallback());
 
         for (int i = 0; i < numeroDeRequisicoes; i++) {
             requisicao.setRandomParametro();
             requisicao.send(new CallBack() {
                 @Override
                 public void result() {
-                    buffer.append(getResultado() + System.lineSeparator());
+                    getBuffer().append(getResultado() + System.lineSeparator());
                     contador.decrementar();
                 }
             });
         }
+    }
+
+    public StringBuffer getBuffer() {
+        return buffer;
+    }
+
+    public void setBuffer(StringBuffer buffer) {
+        this.buffer = buffer;
+    }
+
+    public CallBack getCallback() {
+        return callback;
+    }
+
+    public void setCallback(CallBack callback) {
+        this.callback = callback;
     }
 }

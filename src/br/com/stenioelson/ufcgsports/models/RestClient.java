@@ -28,16 +28,16 @@ public class RestClient {
 
     private static void handleCompleted(String resultado, String path, String method, long startTime, String categoryRequests, CallBack callBack) {
         JsonObject jo = convertToJson(resultado);
-        JsonObjectBuilder joNeeded = Json.createObjectBuilder();
 
-        joNeeded.add("path", path);
-        joNeeded.add("method", method);
-        joNeeded.add("categoryRequests", categoryRequests);
-        joNeeded.add("requestStart", startTime);
-        joNeeded.add("requestEnd", new Date().getTime());
-        joNeeded.add("dbTime", jo.getJsonArray("dbTime"));
+        String resultCsvFormat = "true" +
+                "," + path +
+                "," + method +
+                "," + categoryRequests +
+                "," + startTime +
+                "," + new Date().getTime() +
+                "," + jo.getJsonArray("dbTime");
 
-        callBack.setResultado("{\"success\": \"true\", \"result\": " + joNeeded.build().toString() + "}");
+        callBack.setResultado(resultCsvFormat);
         callBack.result();
     }
 
@@ -63,7 +63,14 @@ public class RestClient {
 
                     @Override
                     public void failed(Throwable throwable) {
-                        callBack.setResultado("{\"success\": \"false\", \"result\": " + throwable.getMessage() + "}");
+                        String resultCsvFormat = "false" +
+                                "," + path +
+                                "," + "GET" +
+                                "," + categoryRequests +
+                                "," + startTime +
+                                "," + new Date().getTime() +
+                                ",";
+                        callBack.setResultado(resultCsvFormat);
                         callBack.result();
                     }
                 });
@@ -91,7 +98,14 @@ public class RestClient {
 
                     @Override
                     public void failed(Throwable throwable) {
-                        callBack.setResultado("{success: false, result: " + throwable.getMessage() + "}");
+                        String resultCsvFormat = "false" +
+                                "," + path +
+                                "," + "POST" +
+                                "," + categoryRequests +
+                                "," + startTime +
+                                "," + new Date().getTime() +
+                                ",";
+                        callBack.setResultado(resultCsvFormat);
                         callBack.result();
                     }
                 });
