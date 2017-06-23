@@ -12,6 +12,7 @@ public class Teste {
     public Teste(Requisicao requisicao, int numeroDeRequisicoes) {
         setRequisicao(requisicao);
         setNumeroDeRequisicoes(numeroDeRequisicoes);
+        setCategoryRequest();
     }
 
     public Requisicao getRequisicao() {
@@ -20,6 +21,10 @@ public class Teste {
 
     public void setRequisicao(Requisicao requisicao) {
         this.requisicao = requisicao;
+    }
+
+    private void setCategoryRequest() {
+        this.requisicao.setCategoryRequest(this.numeroDeRequisicoes + "");
     }
 
     public int getNumeroDeRequisicoes() {

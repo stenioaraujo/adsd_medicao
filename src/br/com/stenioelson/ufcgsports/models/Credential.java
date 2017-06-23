@@ -13,7 +13,7 @@ import java.io.StringReader;
 public class Credential {
     private static String token;
     private static String host;
-    public static final String REMOTE_HOST = "http://arrumai.stenioelson.com.br:9000";
+    public static final String REMOTE_HOST = "http://arrumai-p1.duckdns.org:9000";
     public static final String LOCAL_HOST = "http://localhost:9000";
     public static final String AUTH_PATH = "/auth/local";
     public static final String RECURSOS_PATH = "/api/recursos";

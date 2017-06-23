@@ -9,6 +9,6 @@ public class RequisicaoEscrita extends Requisicao {
         String input = "{\"nome\": \"sauna\", "
                 + "\"minPessoas\":\"2\"}";
 
-        RestClient.post(Credential.getHost(), Credential.RECURSOS_PATH, input, callBack);
+        RestClient.post(Credential.getHost(), Credential.RECURSOS_PATH, input, getCategoryRequest(), callBack);
     }
 }
