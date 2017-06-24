@@ -38,12 +38,13 @@ public class Main {
         CallBack callBackMetodo = new CallBack() {
             @Override
             public void result() {
+                System.out.println("Done");
                 contador.decrementar();
                 if (!testsToRun.isEmpty()) {
                     Teste runTest = testsToRun.get(0);
                     testsToRun.remove(0);
-                    System.out.println("Running: " + runTest.getRequisicao().getClass().toString() + " " +
-                            runTest.getNumeroDeRequisicoes());
+                    System.out.print("Running: " + runTest.getRequisicao().getClass().toString() + " " +
+                            runTest.getNumeroDeRequisicoes() + "... ");
                     runTest.run();
                 }
             }
@@ -58,8 +59,8 @@ public class Main {
 
         Teste firstTestToRun = testsToRun.get(0);
         testsToRun.remove(0);
-        System.out.println("Running: " + firstTestToRun.getRequisicao().getClass().toString() + " " +
-                firstTestToRun.getNumeroDeRequisicoes());
+        System.out.print("Running: " + firstTestToRun.getRequisicao().getClass().toString() + " " +
+                firstTestToRun.getNumeroDeRequisicoes() + "... ");
         firstTestToRun.run();
     }
 
@@ -72,10 +73,12 @@ public class Main {
         File file = new File("result.csv");
 
         if (file.createNewFile()){
+            System.out.println(file.getAbsolutePath() + " created.");
             return file;
         }
 
-        throw new IOException("File already exists or there was a problem. Please delete or move the existing one.");
+        throw new IOException("File " + file.getAbsolutePath() +
+                " already exists or there was a problem. If it already exists, move the existing one to another place.");
     }
 
     public static void addToFile(File file, String text) throws IOException {

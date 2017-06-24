@@ -55,7 +55,7 @@ public class RestClient {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .headers(Credential.getHeaders())
                 .async()
-                .get(createInvocationCallback("GET"));
+                .get(createInvocationCallback("GET", path, categoryRequests, callBack));
     }
 
     public static void post(String hostWithProtocol, String path, String input, String categoryRequests, CallBack callBack) {
@@ -70,10 +70,10 @@ public class RestClient {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .headers(Credential.getHeaders())
                 .async()
-                .post(Entity.json(input), createInvocationCallback("POST");
+                .post(Entity.json(input), createInvocationCallback("POST", path, categoryRequests, callBack));
     }
     
-    private InvocationCallback<String> createInvocationCallback (String method) {
+    private static InvocationCallback<String> createInvocationCallback (String method, String path, String categoryRequests, CallBack callBack) {
         InvocationCallback<String> invocation = new InvocationCallback<String>() {
             private long startTime = new Date().getTime();
                     
