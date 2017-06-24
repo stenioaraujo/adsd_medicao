@@ -17,6 +17,8 @@ import java.util.Date;
  * Created by stenio on 11/06/17.
  */
 public class RestClient {
+    
+    private RestClient() {}
 
     public static JsonObject convertToJson(String string) {
         if (string.startsWith("[")) {
@@ -53,27 +55,7 @@ public class RestClient {
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .headers(Credential.getHeaders())
                 .async()
-                .get(new InvocationCallback<String>() {
-                    private long startTime = new Date().getTime();
-
-                    @Override
-                    public void completed(String resultado) {
-                        handleCompleted(resultado, path, "GET", startTime, categoryRequests, callBack);
-                    }
-
-                    @Override
-                    public void failed(Throwable throwable) {
-                        String resultCsvFormat = "false" +
-                                "," + path +
-                                "," + "GET" +
-                                "," + categoryRequests +
-                                "," + startTime +
-                                "," + new Date().getTime() +
-                                ",";
-                        callBack.setResultado(resultCsvFormat);
-                        callBack.result();
-                    }
-                });
+                .get(createInvocationCallback("GET"));
     }
 
     public static void post(String hostWithProtocol, String path, String input, String categoryRequests, CallBack callBack) {
@@ -82,33 +64,39 @@ public class RestClient {
         configuration.property(ClientProperties.READ_TIMEOUT, 2000);
         WebTarget target = ClientBuilder.newClient().target(hostWithProtocol);
 
-        long startTime = new Date().getTime();
-
         target
                 .path(path)
                 .request()
                 .accept(MediaType.APPLICATION_JSON_TYPE)
                 .headers(Credential.getHeaders())
                 .async()
-                .post(Entity.json(input), new InvocationCallback<String>() {
-                    @Override
-                    public void completed(String resultado) {
-                        handleCompleted(resultado, path, "POST", startTime, categoryRequests, callBack);
-                    }
+                .post(Entity.json(input), createInvocationCallback("POST");
+    }
+    
+    private InvocationCallback<String> createInvocationCallback (String method) {
+        InvocationCallback<String> invocation = new InvocationCallback<String>() {
+            private long startTime = new Date().getTime();
+                    
+            @Override
+            public void completed(String resultado) {
+                handleCompleted(resultado, path, method, startTime, categoryRequests, callBack);
+            }
 
-                    @Override
-                    public void failed(Throwable throwable) {
-                        String resultCsvFormat = "false" +
-                                "," + path +
-                                "," + "POST" +
-                                "," + categoryRequests +
-                                "," + startTime +
-                                "," + new Date().getTime() +
-                                ",";
-                        callBack.setResultado(resultCsvFormat);
-                        callBack.result();
-                    }
-                });
+            @Override
+            public void failed(Throwable throwable) {
+                String resultCsvFormat = "false" +
+                        "," + path +
+                        "," + method +
+                        "," + categoryRequests +
+                        "," + startTime +
+                        "," + new Date().getTime() +
+                        ",";
+                callBack.setResultado(resultCsvFormat);
+                callBack.result();
+            }
+        };
+        
+        return invocation;
     }
 
     public static Response postSync(String hostWithProtocol, String path, String input) {
