@@ -17,6 +17,7 @@ public class Credential {
     public static final String LOCAL_HOST = "http://localhost:9000";
     public static final String AUTH_PATH = "/auth/local";
     public static final String RECURSOS_PATH = "/api/recursos";
+    private static String recursoId;
     public static final String X_APPLICATION_ID = "5538a255bcec4a702a24bb59";
     public static final String X_API_KEY = "003d8ed40432044e7394131e09f8ad9fc57cd55d";
     public static final String LOGIN_JSON_CREDENTIALS = "{\"email\": \"admin@admin.com\", \"password\": \"secret\"}";
@@ -25,6 +26,14 @@ public class Credential {
 
     private class Token {
         public String token;
+    }
+
+    public static void setRecursoId(String id) {
+        recursoId = id;
+    }
+
+    public static String getRecursoId() {
+        return recursoId;
     }
 
     public static String getHost() {

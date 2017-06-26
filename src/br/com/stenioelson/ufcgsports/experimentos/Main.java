@@ -16,6 +16,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         Credential.setHost(Credential.REMOTE_HOST);
+        Credential.setRecursoId("59505a44834afb0f341dbc4b");
+        
         File resultFile = createResultFile();
         StringBuffer buffer = new StringBuffer();
         List<Teste> testsToRun = new ArrayList<>();
